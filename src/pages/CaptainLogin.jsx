@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import uberlogo from "/public/Uber_logo.png";
 import { Link } from "react-router-dom";
 
-const UserLogin = () => {
+const CaptainLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const userData = { email, password };
+    const captainData = { email, password };
 
-    console.log(userData);
+    console.log(captainData);
 
     setEmail("");
     setPassword("");
@@ -51,16 +51,19 @@ const UserLogin = () => {
         </form>
         <p className="text-sm w-full text-center mt-5 font-medium">
           Don't have an account ?{" "}
-          <Link to="/signup" className="text-blue-600">
-            Create New Account
+          <Link to="/captain-signup" className="text-blue-600">
+            Register as a Captain
           </Link>
         </p>
       </div>
-      <Link to="/captain-login" className="w-full flex items-center justify-center px-4 py-2 rounded-md bg-green-600 text-white font-medium border-none ">
-        Sign in as Captain
+      <Link
+        to="/captain-login"
+        className="w-full flex items-center justify-center px-4 py-2 rounded-md bg-[#B36800] text-white font-medium border-none "
+      >
+        Sign in as User
       </Link>
     </div>
   );
 };
 
-export default UserLogin;
+export default CaptainLogin;
