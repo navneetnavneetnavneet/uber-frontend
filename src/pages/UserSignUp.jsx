@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import uberlogo from "/public/Uber_logo.png";
+import uberlogo from "/uber_logo.png";
 import { Link } from "react-router-dom";
 
 const UserSignUp = () => {
