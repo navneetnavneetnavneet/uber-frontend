@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import uberlogo from "/uber_logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { captainContext } from "../context/CaptainContext";
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+  const { captain, setCaptain } = useContext(captainContext);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const captainData = { email, password };
 
-    console.log(captainData);
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/captains/login`,
+      captainData
+    );
+
+    if (response.status === 200) {
+      const data = response.data;
+      setCaptain(data.captain);
+      localStorage.setItem("token", JSON.stringify(data.token));
+      navigate("/captain-home");
+    }
 
     setEmail("");
     setPassword("");
