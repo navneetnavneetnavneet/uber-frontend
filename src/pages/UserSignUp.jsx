@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import uberlogo from "/uber_logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { userContext } from "../context/UserContext";
 
 const UserSignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -8,7 +10,10 @@ const UserSignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(userContext);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const userData = {
@@ -20,7 +25,16 @@ const UserSignUp = () => {
       password,
     };
 
-    console.log(userData);
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      userData
+    );
+
+    if (response.status === 201) {
+      const data = response.data;
+      setUser(data.user);
+      navigate("/home");
+    }
 
     setFirstName("");
     setLastName("");
